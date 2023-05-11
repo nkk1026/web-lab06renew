@@ -21,11 +21,11 @@ app.use(articles.routes());
 app.use(async (ctx: RouterContext, next: any) => {
   try {
     await next();
-    if(ctx.status === 404){
-      ctx.body = {err: "Resource not found"};
+    if (ctx.status === 404) {
+      ctx.body = { err: "Resource not found1" };
     }
-  } catch(err: any) {
-    ctx.body = {err: err};
+  } catch (err: any) {
+    ctx.body = { err: err };
   }
 
 })

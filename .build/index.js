@@ -31,7 +31,7 @@ app.use(async (ctx, next) => {
   try {
     await next();
     if (ctx.status === 404) {
-      ctx.body = { err: "Resource not found" };
+      ctx.body = { err: "Resource not found1" };
     }
   } catch (err) {
     ctx.body = { err };
