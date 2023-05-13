@@ -16,12 +16,19 @@ const getAll = async (ctx: RouterContext, next: any) => {
   if (articles.length) {
     ctx.body = articles;
   } else {
-    ctx.body = {}
+    ctx.body = {};
   }
   await next();
 }
 
 const createArticle = async (ctx: RouterContext, next: any) => {
+  /*let c: any = ctx.request.body;
+  let title = c.title;
+  let fullText = c.fullText;
+  let newArticle = {title: title, fullText: fullText};
+  articles.push(newArticle);
+  ctx.status = 201;
+  ctx.body = newArticle; */
   const body = ctx.request.body;
   let result = await model.add(body);
   if (result.status == 201) {
@@ -36,7 +43,12 @@ const createArticle = async (ctx: RouterContext, next: any) => {
 
 
 const getById = async (ctx: RouterContext, next: any) => {
-  let id = ctx.params.id;
+  let id = +ctx.params.id;
+  /*if((id < articles.length +1) && (id>0)){
+    ctx.body = articles[id-1];
+  } else {
+    ctx.status = 404;
+  }*/
   let article = await model.getById(id);
   if (article.length) {
     ctx.body = article[0];
@@ -52,10 +64,10 @@ const updateArticle = async (ctx: RouterContext, next: any) => {
   let c: any = ctx.request.body;
   let title = c.title;
   let fullText = c.fullText;
-  if ((id < articles.length + 1) && (id > 0)) {
-    articles[id - 1].title = title;
-    articles[id - 1].fullText = fullText;
-    ctx.status = 200;
+  if ((id < articles.length+1) && (id > 0)) {
+    articles[id-1].title = title;
+    articles[id-1].fullText = fullText;
+    ctx.status = 200;    
     ctx.body = articles;
   } else {
     ctx.status = 404;
@@ -65,8 +77,8 @@ const updateArticle = async (ctx: RouterContext, next: any) => {
 
 const deleteArticle = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
-  if ((id < articles.length + 1) && (id > 0)) {
-    articles.splice(id - 1, 1);
+  if((id < articles.length+1) && (id > 0)) {
+    articles.splice(id-1, 1);
     ctx.status = 200;
     ctx.body = articles;
   } else {
@@ -78,7 +90,6 @@ const deleteArticle = async (ctx: RouterContext, next: any) => {
 router.get('/', getAll);
 router.post('/', bodyParser(), createArticle);
 router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', updateArticle);
 router.put('/:id([0-9]{1,})', bodyParser(), updateArticle);
 router.delete('/:id([0-9]{1,})', deleteArticle);
 

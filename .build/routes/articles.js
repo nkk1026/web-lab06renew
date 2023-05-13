@@ -53,7 +53,7 @@ const createArticle = async (ctx, next) => {
   await next();
 };
 const getById = async (ctx, next) => {
-  let id = ctx.params.id;
+  let id = +ctx.params.id;
   let article = await model.getById(id);
   if (article.length) {
     ctx.body = article[0];
@@ -79,6 +79,7 @@ const updateArticle = async (ctx, next) => {
 };
 const deleteArticle = async (ctx, next) => {
   let id = +ctx.params.id;
+  let article = await model.getById(id);
   if (id < articles.length + 1 && id > 0) {
     articles.splice(id - 1, 1);
     ctx.status = 200;
@@ -91,7 +92,6 @@ const deleteArticle = async (ctx, next) => {
 router.get("/", getAll);
 router.post("/", (0, import_koa_bodyparser.default)(), createArticle);
 router.get("/:id([0-9]{1,})", getById);
-router.put("/:id([0-9]{1,})", updateArticle);
 router.put("/:id([0-9]{1,})", (0, import_koa_bodyparser.default)(), updateArticle);
 router.delete("/:id([0-9]{1,})", deleteArticle);
 // Annotate the CommonJS export names for ESM import in node:
