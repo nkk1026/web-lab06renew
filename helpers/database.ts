@@ -1,5 +1,5 @@
 import { Sequelize, QueryTypes } from 'sequelize';
-import { config } from '../config';
+import { config } from "../config";
 
 // define an async utility function to get a connection
 // run an SQL query then end the connection

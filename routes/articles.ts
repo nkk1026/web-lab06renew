@@ -1,18 +1,15 @@
 import Router, { RouterContext } from "koa-router";
 import bodyParser from "koa-bodyparser"
-import * as model from '../models/articles';
+import * as model from "../models/articles";
 
-const articles = [
-  { title: 'Hello article', fullText: 'some text to fill the body' },
-  { title: 'another article', fullText: 'again here is some text here to fill' },
-  { title: 'coventry university', fullText: 'some news about coventry university' },
-  { title: 'smart campus', fullText: 'smart campus is coming to IVE' }
-];
+// const articles = [
+//   { title: 'Hello article', fullText: 'some text to fill the body' },
+//   { title: 'another article', fullText: 'again here is some text here to fill' },
+//   { title: 'coventry university', fullText: 'some news about coventry university' },
+//   { title: 'smart campus', fullText: 'smart campus is coming to IVE' }
+// ];
+
 const router = new Router({ prefix: '/api/v1/articles' });
-const getAll = async (ctx: RouterContext, next: any) => {
-  ctx.body = articles;
-  await next();
-}
 
 const getAll = async (ctx: RouterContext, next: any) => {
   let articles = await model.getAll();
